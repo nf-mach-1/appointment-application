@@ -62,28 +62,7 @@ public class Booking extends JFrame implements ActionListener{
 		msgarea.add(msgbox);
 		//Buttons panel
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		book.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!cName.getText().isEmpty() && !cNumber.getText().isEmpty() && !year.getText().isEmpty()) {
-						PrintWriter f;
-						try {
-							f = new PrintWriter(new FileOutputStream("booking.txt",true));									
-							f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+
-									dbox.getSelectedItem().toString()+"\t"+mbox.getSelectedItem().toString()+"\t"+
-									year.getText().trim()+"\t"+slot.getSelectedItem().toString());
-							f.close();
-						}catch(Exception ex) {
-							System.out.println("File not found for writing!");
-						}
-						msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+dbox.getSelectedItem().toString()+" "+
-								mbox.getSelectedItem().toString()+" "+year.getText()+"\n"+slot.getSelectedItem().toString()+"\n"+
-								"Booking complete.");
-					
-				}else {
-					msgbox.setText("Please fill in all the details!");
-				}
-			}
-		});
+		book.addActionListener(this);
 		buttons.add(book);
 		JButton clear = new JButton("Clear");
 		clear.addMouseListener(new MouseAdapter() {
@@ -116,13 +95,61 @@ public class Booking extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		Booking window = new Booking();
-		window.setVisible(true);		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter 1(Admin) or 2(Staff): ");int val = sc.nextInt();
+		if(val == 1) {
+			Admin admin = new Admin();
+			admin.setVisible(true);
+		}else {
+			Booking window1 = new Booking();
+			window1.setVisible(true);
+		}
+		sc.close();
 	}
 
-
+	public boolean isBooked(String d,String m,String y,String s) throws FileNotFoundException {
+		Scanner sc = new Scanner(new File("booking.txt"));
+		String line,tempD,tempM,tempY,tempS;
+		while(sc.hasNextLine()) {
+			line = sc.nextLine();
+			String[] sline = line.split("\t");
+			tempD = sline[2];
+			tempM = sline[3];
+			tempY = sline[4];
+			tempS = sline[5];
+			if(tempD.equalsIgnoreCase(d) && tempM.equalsIgnoreCase(m) && tempY.equalsIgnoreCase(y) && tempS.equalsIgnoreCase(s)) {
+				return true;
+			}
+		}
+		sc.close();
+		return false;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		
+		if(!cName.getText().isEmpty() && !cNumber.getText().isEmpty() && !year.getText().isEmpty()) {
+			PrintWriter f;
+			String tempd = dbox.getSelectedItem().toString();
+			String tempm = mbox.getSelectedItem().toString();
+			String tempy = year.getText().trim();
+			String temps = slot.getSelectedItem().toString();
+			try {
+				if(isBooked(tempd,tempm,tempy,temps)) {
+					msgbox.setText("The slot has been taken. Please choose another slot.");
+				}else {
+				
+					Scanner sc = new Scanner(new File("booking.txt"));
+					f = new PrintWriter(new FileOutputStream("booking.txt",true));									
+					f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
+					f.close();
+					sc.close();
+					msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+				}
+			}catch(Exception ex) {
+				System.out.println("File not found for writing!");
+			}
+		}else {
+			msgbox.setText("Please fill in all the details!");
+		}
 	}
 }
