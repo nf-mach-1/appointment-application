@@ -3,6 +3,7 @@ import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Calendar;
 
 public class Booking extends JFrame implements ActionListener{
 
@@ -93,19 +94,6 @@ public class Booking extends JFrame implements ActionListener{
 		mainpanel.add(buttons);
 		add(mainpanel);
 	}
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter 1(Admin) or 2(Staff): ");int val = sc.nextInt();
-		if(val == 1) {
-			Admin admin = new Admin();
-			admin.setVisible(true);
-		}else {
-			Booking window1 = new Booking();
-			window1.setVisible(true);
-		}
-		sc.close();
-	}
 
 	public boolean isBooked(String d,String m,String y,String s) throws FileNotFoundException {
 		Scanner sc = new Scanner(new File("booking.txt"));
@@ -133,20 +121,26 @@ public class Booking extends JFrame implements ActionListener{
 			String tempm = mbox.getSelectedItem().toString();
 			String tempy = year.getText().trim();
 			String temps = slot.getSelectedItem().toString();
-			try {
-				if(isBooked(tempd,tempm,tempy,temps)) {
-					msgbox.setText("The slot has been taken. Please choose another slot.");
-				}else {
+			Calendar da = Calendar.getInstance();
+			int syear = Integer.parseInt(tempy);
+			if(syear >= da.getWeekYear()) {
+				try {
+					if(isBooked(tempd,tempm,tempy,temps)) {
+						msgbox.setText("The slot has been taken. Please choose another slot.");
+					}else {
 				
-					Scanner sc = new Scanner(new File("booking.txt"));
-					f = new PrintWriter(new FileOutputStream("booking.txt",true));									
-					f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
-					f.close();
-					sc.close();
-					msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+						Scanner sc = new Scanner(new File("booking.txt"));
+						f = new PrintWriter(new FileOutputStream("booking.txt",true));									
+						f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
+						f.close();
+						sc.close();
+						msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+					}
+				}catch(Exception ex) {
+					System.out.println("File not found for writing!");
 				}
-			}catch(Exception ex) {
-				System.out.println("File not found for writing!");
+			}else {
+				msgbox.setText("We have passed that year. Enter current or valid year.");
 			}
 		}else {
 			msgbox.setText("Please fill in all the details!");
