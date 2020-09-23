@@ -12,13 +12,13 @@ public class Main extends JFrame {
 
 	public Main() {
 		setSize(400,100); 
-		setTitle("View Bookings"); 
+		setTitle("Appointments Booking Application"); 
 		JPanel mainpanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JLabel welc = new JLabel();
 		welc.setText("Welcome to the booking application.");
 		mainpanel.add(welc);
 		JPanel btn = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JButton adm = new JButton("Admin");
+		JButton adm = new JButton("View Booking");
 		adm.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				Admin admin = new Admin();
@@ -26,6 +26,7 @@ public class Main extends JFrame {
 				mWin.setVisible(false);
 			}
 		});
+		
 		btn.add(adm);
 		
 		JButton book = new JButton("Booking");
