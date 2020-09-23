@@ -15,7 +15,7 @@ public class Admin extends JFrame{
 	private JLabel elbl = new JLabel(); 
 	JTable table;
 	public Admin() {
-		setSize(650,200); // setting the size of the window
+		setSize(650,400); // setting the size of the window
 		setTitle("View Bookings"); 
 		JPanel mainpanel = new JPanel();
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));;
