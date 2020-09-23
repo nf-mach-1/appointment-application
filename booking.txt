@@ -1,2 +1,2 @@
-Nhlakanipho Machi	0789989352	22	September	2020	14:00-15:00
-Aphiwe Machi	072455857	23	September	2020	10:00-11:00
+Nhlakanipho Machi	0123654789	1	October	2020	08:00-09:00
+Nhlakanipho Machi	0123654789	1	October	2020	12:00-13:00
