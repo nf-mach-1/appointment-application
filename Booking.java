@@ -27,7 +27,7 @@ public class Booking extends JFrame implements ActionListener{
 	
 	public Booking() {
 		setSize(750,500); // setting the size of the window
-		setTitle("Appointments Booking Application"); 
+		setTitle("Make A Booking"); 
 		JPanel mainpanel = new JPanel();
 		
 		JPanel clientname = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -137,7 +137,7 @@ public class Booking extends JFrame implements ActionListener{
 						msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
 					}
 				}catch(Exception ex) {
-					System.out.println("File not found for writing!");
+					msgbox.setText("File not found for writing!");
 				}
 			}else {
 				msgbox.setText("We have passed that year. Enter current or valid year.");
