@@ -1,3 +1,6 @@
 # appointment-application
-The application is a mini booking application where a user can be book a slot and that booking will be saved to a file.
-If the user tries to book the same slot of the same date, the slots time will change to red indicating that the slot has been taken.
+The application is operated by one person who is able to book and also see the people who have booked.
+It is a mini booking application, which allows a person to book and also let them see the bookings which have been made.
+The application saves bookings to a text file and the file is used to avoid double booking. 
+The application loops through the file. If the selected date and slot is found in the text file, it then tells the user that the slot has been booked. This forces them to change the slot or date if the entire day was booked.
+The application is made up of 2 section booking and view booking.
