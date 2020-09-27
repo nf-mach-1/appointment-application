@@ -1,2 +1,3 @@
 Nhlakanipho Machi	0123654789	1	October	2020	08:00-09:00
 Nhlakanipho Machi	0123654789	1	October	2020	12:00-13:00
+Celumusa Duma	0897789098	29	September	2020	11:00-12:00
