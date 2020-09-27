@@ -1,4 +1,7 @@
 # appointment-application
+
+Application is developed using java,it uses the GUI to facilitate a good interface. Hardly interact with the terminal.
+
 The application is operated by one person who is able to book and also see the people who have booked.
 It is a mini booking application, which allows a person to book and also let them see the bookings which have been made.
 The application saves bookings to a text file and the file is used to avoid double booking. 
