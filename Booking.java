@@ -40,7 +40,9 @@ public class Booking extends JFrame implements ActionListener{
 		JLabel lblcnumber = new JLabel("Contact number: ");
 		clientnumber.add(lblcnumber);
 		cNumber = new JTextField(10);
+		JLabel num = new JLabel("e.g 0892234756");
 		clientnumber.add(cNumber);
+		clientnumber.add(num);
 		
 		//calendar
 		//days
@@ -60,6 +62,7 @@ public class Booking extends JFrame implements ActionListener{
 		
 		JPanel msgarea = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		msgbox = new JTextArea(10,20);
+		msgbox.setEditable(false);
 		msgarea.add(msgbox);
 		//Buttons panel
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -123,24 +126,36 @@ public class Booking extends JFrame implements ActionListener{
 			String temps = slot.getSelectedItem().toString();
 			Calendar da = Calendar.getInstance();
 			int syear = Integer.parseInt(tempy);
-			if(syear >= da.getWeekYear()) {
-				try {
-					if(isBooked(tempd,tempm,tempy,temps)) {
-						msgbox.setText("The slot has been taken. Please choose another slot.");
-					}else {
+			int sp = cName.getText().indexOf(" ");
+			String n1 = cName.getText().substring(0,sp).trim();
+			String n2 = cName.getText().substring(sp+1).trim();
+			String alp = "abcdefghijklmonpqrstuvwxyz";
+			if(!n1.trim().toLowerCase().contains(alp) && !n2.trim().toLowerCase().contains(alp)) {
+				if(!(cNumber.getText().toString().contains("0123456789")) && (cNumber.getText().toString().length() == 10)) {
+					if(syear >= da.getWeekYear()) {
+						try {
+							if(isBooked(tempd,tempm,tempy,temps)) {
+								msgbox.setText("The slot has been taken. Please choose another slot.");
+							}else {
 				
-						Scanner sc = new Scanner(new File("booking.txt"));
-						f = new PrintWriter(new FileOutputStream("booking.txt",true));									
-						f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
-						f.close();
-						sc.close();
-						msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+								Scanner sc = new Scanner(new File("booking.txt"));
+								f = new PrintWriter(new FileOutputStream("booking.txt",true));									
+								f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
+								f.close();
+								sc.close();
+								msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+							}
+						}catch(Exception ex) {
+							msgbox.setText("File not found for writing!");
+						}
+					}else {
+						msgbox.setText("We have passed that year. Enter current or valid year.");
 					}
-				}catch(Exception ex) {
-					msgbox.setText("File not found for writing!");
+				}else {
+					msgbox.setText("Invalid contact number!");
 				}
 			}else {
-				msgbox.setText("We have passed that year. Enter current or valid year.");
+				msgbox.setText("Enter a valid name containing no characters!");
 			}
 		}else {
 			msgbox.setText("Please fill in all the details!");
