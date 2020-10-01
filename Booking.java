@@ -136,14 +136,34 @@ public class Booking extends JFrame implements ActionListener{
 			int cday = Integer.parseInt(tempd);
 			int syear = Integer.parseInt(tempy);
 			int sp = cName.getText().indexOf(" ");
-			String n1 = cName.getText().substring(0,sp).trim();
-			String n2 = cName.getText().substring(sp+1).trim();
-			String alp = "abcdefghijklmonpqrstuvwxyz";
-			if(!n1.trim().toLowerCase().contains(alp) && !n2.trim().toLowerCase().contains(alp)) {
-				if(!(cNumber.getText().toString().contains("0123456789")) && (cNumber.getText().toString().length() == 10)) {
-					if(syear >= da.get(Calendar.YEAR)) {
-						if(mmm >= mon) { 
-							if(cday >= days) {
+			String n1 = cName.getText().substring(0,sp).trim().toLowerCase();
+			String n2 = cName.getText().substring(sp+1).trim().toLowerCase();
+			
+			boolean bool1 = false;
+			boolean bool2 = false;
+			
+			for(int i=0;i<n1.length();i++) {
+				if(n1.charAt(i) >= 'a' && n1.charAt(i) <= 'z') {bool1 = true;}
+				else {bool1 = false;break;}
+			}
+			
+			for(int i=0;i<n2.length();i++) {
+				if(n2.charAt(i) >= 'a' && n2.charAt(i) <= 'z') {bool2 = true;}
+				else {bool2 = false;break;}
+			}
+			
+			boolean bool3 = false;
+			String cNum = cNumber.getText().toString();
+			for(int i=0;i<cNum.length();i++) {
+				if(cNum.charAt(i) >= '0' && cNum.charAt(i) <= '9') {bool3 = true;}
+				else {bool3 = false;break;}
+			}
+			
+			if(bool1 && bool2) {
+				if((bool3) && (cNum.length() == 10)) {
+					if(syear >= da.get(Calendar.YEAR) && (tempy.length() == 4)) {
+						if(mmm >= mon || syear > da.get(Calendar.YEAR)) {  
+							if(cday >= days || (syear > da.get(Calendar.YEAR))) {
 								try {
 									if(isBooked(tempd,tempm,tempy,temps)) {
 										msgbox.setText("The slot has been taken. Please choose another slot.");
