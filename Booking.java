@@ -125,6 +125,15 @@ public class Booking extends JFrame implements ActionListener{
 			String tempy = year.getText().trim();
 			String temps = slot.getSelectedItem().toString();
 			Calendar da = Calendar.getInstance();
+			int mon = da.get(Calendar.MONTH);
+			int days = da.get(Calendar.DAY_OF_MONTH);
+			int mmm = -1;
+			for(int i=0;i<12;i++) {
+				if(months[i].equalsIgnoreCase(tempm)) {
+					mmm = i;
+				}
+			}
+			int cday = Integer.parseInt(tempd);
 			int syear = Integer.parseInt(tempy);
 			int sp = cName.getText().indexOf(" ");
 			String n1 = cName.getText().substring(0,sp).trim();
@@ -132,21 +141,29 @@ public class Booking extends JFrame implements ActionListener{
 			String alp = "abcdefghijklmonpqrstuvwxyz";
 			if(!n1.trim().toLowerCase().contains(alp) && !n2.trim().toLowerCase().contains(alp)) {
 				if(!(cNumber.getText().toString().contains("0123456789")) && (cNumber.getText().toString().length() == 10)) {
-					if(syear >= da.getWeekYear()) {
-						try {
-							if(isBooked(tempd,tempm,tempy,temps)) {
-								msgbox.setText("The slot has been taken. Please choose another slot.");
-							}else {
+					if(syear >= da.get(Calendar.YEAR)) {
+						if(mmm >= mon) { 
+							if(cday >= days) {
+								try {
+									if(isBooked(tempd,tempm,tempy,temps)) {
+										msgbox.setText("The slot has been taken. Please choose another slot.");
+									}else {
 				
-								Scanner sc = new Scanner(new File("booking.txt"));
-								f = new PrintWriter(new FileOutputStream("booking.txt",true));									
-								f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
-								f.close();
-								sc.close();
-								msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+										Scanner sc = new Scanner(new File("booking.txt"));
+										f = new PrintWriter(new FileOutputStream("booking.txt",true));									
+										f.println(cName.getText().trim()+"\t"+cNumber.getText().trim()+"\t"+tempd+"\t"+tempm+"\t"+tempy+"\t"+temps);
+										f.close();
+										sc.close();
+										msgbox.setText(cName.getText()+"\n"+cNumber.getText()+"\n"+tempd+" "+tempm+" "+tempy+"\n"+temps+"\n"+"Booking complete.");
+									}
+								}catch(Exception ex) {
+									msgbox.setText("File not found for writing!");
+								}
+							}else {
+								msgbox.setText("We have passed that day. Enter current or valid day.");
 							}
-						}catch(Exception ex) {
-							msgbox.setText("File not found for writing!");
+						}else {
+							msgbox.setText("We have passed that month. Enter current or valid month.");
 						}
 					}else {
 						msgbox.setText("We have passed that year. Enter current or valid year.");
