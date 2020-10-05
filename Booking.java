@@ -163,7 +163,10 @@ public class Booking extends JFrame implements ActionListener{
 				if((bool3) && (cNum.length() == 10)) {
 					if(syear >= da.get(Calendar.YEAR) && (tempy.length() == 4)) {
 						if(mmm >= mon || syear > da.get(Calendar.YEAR)) {  
-							if(cday >= days || (syear > da.get(Calendar.YEAR))) {
+							GregorianCalendar gc = new GregorianCalendar(syear,mmm,cday);
+							gc.set(syear, mmm, cday);
+							gc.getActualMaximum(Calendar.DATE);
+							if(cday >= days || ((syear > da.get(Calendar.YEAR)) && (cday >= gc.getActualMinimum(Calendar.DATE) && cday <= gc.getActualMaximum(Calendar.DATE)))) {
 								try {
 									if(isBooked(tempd,tempm,tempy,temps)) {
 										msgbox.setText("The slot has been taken. Please choose another slot.");
