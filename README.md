@@ -5,3 +5,11 @@ Application is developed using java,it uses the GUI to facilitate a good interfa
 Users need to login first before they are able to use the application.
 It then redirect the user to a correct page.
 The application save bookings made to a text file.
+
+
+user1 : username : admin@work.com
+        password : admin
+        
+        
+user2 : username : test@work.com
+        password : test
